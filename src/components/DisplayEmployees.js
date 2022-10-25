@@ -8,7 +8,7 @@ const DisplayEmployees = () => {
   const [numberOfEmployees, setNumberOfEmployees] = useState(0);
 
   useEffect(() => {
-    fetch("http://localhost:2000/user-data")
+    fetch("https://employee-data-collation-app.herokuapp.com/user-data") // https://employee-data-collation-app.herokuapp.com/ //http://localhost:2000
       .then((res) => {
         return res.json();
       })

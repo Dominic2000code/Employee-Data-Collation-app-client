@@ -41,8 +41,8 @@ const UploadEmployees = () => {
       return;
     }
     const data = new FormData();
-    data.append("file", file);
-    fetch("http://localhost:2000/upload", {
+    data.append("file", file); // https://employee-data-collation-app.herokuapp.com/  // http://localhost:2000/
+    fetch("https://employee-data-collation-app.herokuapp.com/upload", {
       method: "POST",
       body: data,
     })
