@@ -25,6 +25,30 @@ const DisplayEmployees = () => {
     return diffInDays;
   };
 
+  function parseDays(value) {
+    let year, months, week, days;
+
+    year = value >= 365 ? Math.floor(value / 365) : 0;
+    value = year ? value - year * 365 : value;
+
+    months = value >= 30 ? Math.floor((value % 365) / 30) : 0;
+    value = months ? value - months * 30 : value;
+
+    week = value >= 7 ? Math.floor((value % 365) / 7) : 0;
+    value = week ? value - week * 7 : value;
+
+    days = value < 7 ? Math.floor((value % 365) % 7) : 0;
+
+    // console.log("years = ", year);
+    // console.log("months = ", months);
+    // console.log("weeks = ", week);
+    // console.log("days = ", days);
+
+    return `${year ? year : ""}${year ? "y" : ""} ${months ? months : ""}${
+      months ? "m" : ""
+    } ${days ? days : ""}${days ? "d" : ""}`;
+  }
+
   // const date = employees ? employees[2].date_of_employment : "not yet";
   // const startDate = new Date(date);
 
@@ -61,9 +85,9 @@ const DisplayEmployees = () => {
                 <span>D.O.E</span>
               </div>
             </Tippy>
-            <Tippy content="Duration of employment in days">
+            <Tippy content="Duration of employment">
               <div className="flex cursor-pointer items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                <span>D.E (Days)</span>
+                <span>D.E</span>
               </div>
             </Tippy>
             <div className="flex items-center cursor-pointer flex-grow w-0 h-10 px-2 border-b border-l border-black">
@@ -103,8 +127,8 @@ const DisplayEmployees = () => {
                   <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
                     <span>
                       {" "}
-                      {calculateDaysOfEmployment(
-                        employee.date_of_employment
+                      {parseDays(
+                        calculateDaysOfEmployment(employee.date_of_employment)
                       )}{" "}
                     </span>
                   </div>
