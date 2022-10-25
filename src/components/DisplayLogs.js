@@ -42,6 +42,7 @@ const DisplayLogs = () => {
       .then(({ result }) => {
         compileTimeStamps(result);
       });
+    // eslint-disable-next-line
   }, []);
 
   //   console.log(recordsPerTimestamp[timeStamps[0]]);
@@ -55,7 +56,7 @@ const DisplayLogs = () => {
               <span>Time of Upload</span>
             </div>
             <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>No. Employees Uploaded</span>
+              <span>&#8470; of Records Uploaded</span>
             </div>
             <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
               <span>Status</span>
