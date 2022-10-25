@@ -3,13 +3,17 @@ import Header from "./Header";
 
 const DisplayEmployees = () => {
   const [employees, setEmployees] = useState();
+  const [numberOfEmployees, setNumberOfEmployees] = useState(0);
 
   useEffect(() => {
     fetch("http://localhost:2000/user-data")
       .then((res) => {
         return res.json();
       })
-      .then(({ result }) => setEmployees(result));
+      .then(({ result }) => {
+        setEmployees(result);
+        setNumberOfEmployees(result.length);
+      });
   }, []);
 
   const calculateDaysOfEmployment = (startDate) => {
@@ -23,10 +27,19 @@ const DisplayEmployees = () => {
   // const startDate = new Date(date);
 
   // console.log("calculated date: ", calculateDaysOfEmployment(startDate));
+  // console.log(numberOfEmployees);
 
   return (
     <>
       <Header display={false} />
+      <div className="flex justify-center">
+        <p className="mx-5 mt-6 bg-[#111827] text-white p-4 rounded-md shadow-md">
+          &#8470; of employees: {numberOfEmployees}{" "}
+        </p>
+        <p className="mx-5 mt-6 p-4 bg-[#111827] text-white rounded-md shadow-md ">
+          Date format: MM/DD/YYYY
+        </p>
+      </div>
       <div className="flex w-screen h-screen p-10">
         <div className="flex flex-col w-full border-t border-r border-black">
           <div className="flex flex-shrink-0 bg-[#111827] text-white">
@@ -43,7 +56,7 @@ const DisplayEmployees = () => {
               <span>D.O.E</span>
             </div>
             <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>Duration in Days</span>
+              <span>D.E (Days)</span>
             </div>
             <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
               <span>Position</span>
@@ -52,7 +65,7 @@ const DisplayEmployees = () => {
               <span>Salary</span>
             </div>
             <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>Supervisor</span>
+              <span>Supervisor(s)</span>
             </div>
             <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
               <span>Emp_Code</span>
@@ -92,7 +105,7 @@ const DisplayEmployees = () => {
                     <span> &#8373;{employee.salary} </span>
                   </div>
                   <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                    <span> {employee.supervisor} </span>
+                    <span> {employee.supervisor.replace(";", ",")} </span>
                   </div>
                   <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
                     <span> {employee.employee_code} </span>
