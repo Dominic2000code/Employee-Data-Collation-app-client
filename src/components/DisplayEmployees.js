@@ -19,10 +19,10 @@ const DisplayEmployees = () => {
     return diffInDays;
   };
 
-  const date = employees ? employees[2].date_of_employment : "not yet";
-  const startDate = new Date(date);
+  // const date = employees ? employees[2].date_of_employment : "not yet";
+  // const startDate = new Date(date);
 
-  console.log("calculated date: ", calculateDaysOfEmployment(startDate));
+  // console.log("calculated date: ", calculateDaysOfEmployment(startDate));
 
   return (
     <>

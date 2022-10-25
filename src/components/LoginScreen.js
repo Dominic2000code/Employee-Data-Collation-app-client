@@ -6,7 +6,7 @@ const LoginScreen = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [isWrong, setIsWrong] = useState(false);
-  console.log(isWrong);
+  // console.log(isWrong);
 
   // eslint-disable-next-line
   const { user, setUser } = useContext(UserContext);

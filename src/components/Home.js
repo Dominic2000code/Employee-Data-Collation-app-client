@@ -43,7 +43,7 @@ const Home = () => {
             <div className="mb-8">
               <div className="bg-accent text-accent-content">
                 <Link
-                  to="/display-employees"
+                  to="/display-logs"
                   type="button"
                   className="px-8 py-3  font-semibold mt-10 rounded bg-gray-100 text-gray-800"
                 >
