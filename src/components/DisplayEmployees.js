@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "./Header";
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css";
 
 const DisplayEmployees = () => {
   const [employees, setEmployees] = useState();
@@ -43,33 +45,41 @@ const DisplayEmployees = () => {
       <div className="flex w-screen h-screen p-10">
         <div className="flex flex-col w-full border-t border-r border-black">
           <div className="flex flex-shrink-0 bg-[#111827] text-white">
-            <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+            <div className="flex cursor-pointer items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
               <span>First Name</span>
             </div>
-            <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+            <div className="flex cursor-pointer items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
               <span>Middle Name</span>
             </div>
-            <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>D.O.G</span>
-            </div>
-            <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>D.O.E</span>
-            </div>
-            <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>D.E (Days)</span>
-            </div>
-            <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+            <Tippy content="Date of Graduation">
+              <div className="flex cursor-pointer items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                <span>D.O.G</span>
+              </div>
+            </Tippy>
+            <Tippy content="Date of Employment">
+              <div className="flex cursor-pointer items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                <span>D.O.E</span>
+              </div>
+            </Tippy>
+            <Tippy content="Duration of employment in days">
+              <div className="flex cursor-pointer items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                <span>D.E (Days)</span>
+              </div>
+            </Tippy>
+            <div className="flex items-center cursor-pointer flex-grow w-0 h-10 px-2 border-b border-l border-black">
               <span>Position</span>
             </div>
-            <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+            <div className="flex items-center cursor-pointer flex-grow w-0 h-10 px-2 border-b border-l border-black">
               <span>Salary</span>
             </div>
-            <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+            <div className="flex items-center cursor-pointer flex-grow w-0 h-10 px-2 border-b border-l border-black">
               <span>Supervisor(s)</span>
             </div>
-            <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>Emp_Code</span>
-            </div>
+            <Tippy content="Employee Code">
+              <div className="flex items-center cursor-pointer flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                <span>Emp_Code</span>
+              </div>
+            </Tippy>
           </div>
           <div className="overflow-auto">
             {employees &&
