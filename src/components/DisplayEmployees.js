@@ -54,8 +54,8 @@ const DisplayEmployees = () => {
     // console.log("weeks = ", week);
     // console.log("days = ", days);
 
-    return `${year ? year : ""}${year ? "y" : ""} ${months ? months : ""}${
-      months ? "m" : ""
+    return `${year ? year : ""}${year ? "yr" : ""} ${months ? months : ""}${
+      months ? "mos" : ""
     } ${days ? days : ""}${days ? "d" : ""}`;
   }
 
