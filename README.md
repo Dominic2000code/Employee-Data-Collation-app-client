@@ -14,3 +14,9 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
+
+### `Structure of CSV file for upload`
+
+![alt text](smaple.png "Structure of CSV file")
+
+In the supervisors column to add more that one supervisor a ";" must be used as a separator. A sample excel file is also included to help us. filename: employees.xlsx, it must first be converted in to a .csv file before uploading.
