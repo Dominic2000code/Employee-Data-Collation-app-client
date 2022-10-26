@@ -20,3 +20,9 @@ Your app is ready to be deployed!
 ![alt text](smaple.png "Structure of CSV file")
 
 In the supervisors column to add more that one supervisor a ";" must be used as a separator. A sample excel file is also included to help us. filename: employees.xlsx, it must first be converted in to a .csv file before uploading.
+
+
+### `Accessing the application`
+
+Username: admin
+Password: keypass
