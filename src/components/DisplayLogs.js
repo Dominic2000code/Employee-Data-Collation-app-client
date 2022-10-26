@@ -1,10 +1,18 @@
 import { useEffect, useState } from "react";
-
+import { ClipLoader } from "react-spinners";
 import Header from "./Header";
 
 const DisplayLogs = () => {
   const [timeStamps, setTimeStamps] = useState();
   const [recordsPerTimestamp, setRecordsPerTimestamp] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const style = {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  };
 
   const createUniqueTimeStamps = (duplicate) => {
     const uniqueTimestamps = [...new Set(duplicate)];
@@ -41,6 +49,7 @@ const DisplayLogs = () => {
       })
       .then(({ result }) => {
         compileTimeStamps(result);
+        setIsLoading(false);
       });
     // eslint-disable-next-line
   }, []);
@@ -49,43 +58,47 @@ const DisplayLogs = () => {
   return (
     <div>
       <Header display={false} />
-      <div className="flex w-screen h-screen p-10">
-        <div className="flex flex-col w-full border-t border-r border-black">
-          <div className="flex flex-shrink-0 bg-[#111827] text-white">
-            <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>Time of Upload</span>
+      {isLoading ? (
+        <ClipLoader color="#111827" cssOverride={style} />
+      ) : (
+        <div className="flex w-screen h-screen p-10">
+          <div className="flex flex-col w-full border-t border-r border-black">
+            <div className="flex flex-shrink-0 bg-[#111827] text-white">
+              <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                <span>Time of Upload</span>
+              </div>
+              <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                <span>&#8470; of Records Uploaded</span>
+              </div>
+              <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                <span>Status</span>
+              </div>
+              <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                <span>Error</span>
+              </div>
             </div>
-            <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>&#8470; of Records Uploaded</span>
+            <div className="overflow-auto">
+              {timeStamps &&
+                timeStamps.map((timestamp) => (
+                  <div key={timestamp} className="flex flex-shrink-0">
+                    <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                      <span>{new Date(timestamp).toLocaleString()}</span>
+                    </div>
+                    <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                      <span>{recordsPerTimestamp[timestamp]}</span>
+                    </div>
+                    <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                      <span> {200} </span>
+                    </div>
+                    <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                      <span> {`No error`} </span>
+                    </div>
+                  </div>
+                ))}
             </div>
-            <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>Status</span>
-            </div>
-            <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>Error</span>
-            </div>
-          </div>
-          <div className="overflow-auto">
-            {timeStamps &&
-              timeStamps.map((timestamp) => (
-                <div key={timestamp} className="flex flex-shrink-0">
-                  <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                    <span>{new Date(timestamp).toLocaleString()}</span>
-                  </div>
-                  <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                    <span>{recordsPerTimestamp[timestamp]}</span>
-                  </div>
-                  <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                    <span> {200} </span>
-                  </div>
-                  <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                    <span> {`No error`} </span>
-                  </div>
-                </div>
-              ))}
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

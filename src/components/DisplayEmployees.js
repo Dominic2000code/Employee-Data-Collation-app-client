@@ -2,10 +2,19 @@ import { useEffect, useState } from "react";
 import Header from "./Header";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
+import { ClipLoader } from "react-spinners";
 
 const DisplayEmployees = () => {
   const [employees, setEmployees] = useState();
   const [numberOfEmployees, setNumberOfEmployees] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const style = {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  };
 
   useEffect(() => {
     fetch("https://employee-data-collation-app.herokuapp.com/user-data") // https://employee-data-collation-app.herokuapp.com/ //http://localhost:2000
@@ -15,6 +24,7 @@ const DisplayEmployees = () => {
       .then(({ result }) => {
         setEmployees(result);
         setNumberOfEmployees(result.length);
+        setIsLoading(false);
       });
   }, []);
 
@@ -60,95 +70,104 @@ const DisplayEmployees = () => {
       <Header display={false} />
       <div className="flex justify-center">
         <p className="mx-5 mt-6 bg-[#111827] text-white p-4 rounded-md shadow-md">
-          &#8470; of employees: {numberOfEmployees}{" "}
+          &#8470; of employees:{" "}
+          {isLoading ? (
+            <ClipLoader color="#fff" size={12} />
+          ) : (
+            numberOfEmployees
+          )}{" "}
         </p>
         <p className="mx-5 mt-6 p-4 bg-[#111827] text-white rounded-md shadow-md ">
           Date format: MM/DD/YYYY
         </p>
       </div>
-      <div className="flex w-screen h-screen p-10">
-        <div className="flex flex-col w-full border-t border-r border-black">
-          <div className="flex flex-shrink-0 bg-[#111827] text-white">
-            <div className="flex cursor-pointer items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>First Name</span>
-            </div>
-            <div className="flex cursor-pointer items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>Middle Name</span>
-            </div>
-            <Tippy content="Date of Graduation">
+      {isLoading ? (
+        <ClipLoader color="#111827" cssOverride={style} />
+      ) : (
+        <div className="flex w-screen h-screen p-10">
+          <div className="flex flex-col w-full border-t border-r border-black">
+            <div className="flex flex-shrink-0 bg-[#111827] text-white">
               <div className="flex cursor-pointer items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                <span>D.O.G</span>
+                <span>First Name</span>
               </div>
-            </Tippy>
-            <Tippy content="Date of Employment">
               <div className="flex cursor-pointer items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                <span>D.O.E</span>
+                <span>Middle Name</span>
               </div>
-            </Tippy>
-            <Tippy content="Duration of employment">
-              <div className="flex cursor-pointer items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                <span>D.E</span>
-              </div>
-            </Tippy>
-            <div className="flex items-center cursor-pointer flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>Position</span>
-            </div>
-            <div className="flex items-center cursor-pointer flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>Salary</span>
-            </div>
-            <div className="flex items-center cursor-pointer flex-grow w-0 h-10 px-2 border-b border-l border-black">
-              <span>Supervisor(s)</span>
-            </div>
-            <Tippy content="Employee Code">
-              <div className="flex items-center cursor-pointer flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                <span>Emp_Code</span>
-              </div>
-            </Tippy>
-          </div>
-          <div className="overflow-auto">
-            {employees &&
-              employees.map((employee) => (
-                <div
-                  key={employee.employee_code}
-                  className="flex flex-shrink-0"
-                >
-                  <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                    <span>{employee.first_name}</span>
-                  </div>
-                  <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                    <span>{employee.middle_name}</span>
-                  </div>
-                  <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                    <span> {employee.date_of_graduation} </span>
-                  </div>
-                  <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                    <span> {employee.date_of_employment} </span>
-                  </div>
-                  <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                    <span>
-                      {" "}
-                      {parseDays(
-                        calculateDaysOfEmployment(employee.date_of_employment)
-                      )}{" "}
-                    </span>
-                  </div>
-                  <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                    <span> {employee.position} </span>
-                  </div>
-                  <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                    <span> &#8373;{employee.salary} </span>
-                  </div>
-                  <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                    <span> {employee.supervisor.replace(";", ",")} </span>
-                  </div>
-                  <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                    <span> {employee.employee_code} </span>
-                  </div>
+              <Tippy content="Date of Graduation">
+                <div className="flex cursor-pointer items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                  <span>D.O.G</span>
                 </div>
-              ))}
+              </Tippy>
+              <Tippy content="Date of Employment">
+                <div className="flex cursor-pointer items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                  <span>D.O.E</span>
+                </div>
+              </Tippy>
+              <Tippy content="Duration of employment">
+                <div className="flex cursor-pointer items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                  <span>D.E</span>
+                </div>
+              </Tippy>
+              <div className="flex items-center cursor-pointer flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                <span>Position</span>
+              </div>
+              <div className="flex items-center cursor-pointer flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                <span>Salary</span>
+              </div>
+              <div className="flex items-center cursor-pointer flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                <span>Supervisor(s)</span>
+              </div>
+              <Tippy content="Employee Code">
+                <div className="flex items-center cursor-pointer flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                  <span>Emp_Code</span>
+                </div>
+              </Tippy>
+            </div>
+            <div className="overflow-auto">
+              {employees &&
+                employees.map((employee) => (
+                  <div
+                    key={employee.employee_code}
+                    className="flex flex-shrink-0"
+                  >
+                    <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                      <span>{employee.first_name}</span>
+                    </div>
+                    <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                      <span>{employee.middle_name}</span>
+                    </div>
+                    <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                      <span> {employee.date_of_graduation} </span>
+                    </div>
+                    <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                      <span> {employee.date_of_employment} </span>
+                    </div>
+                    <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                      <span>
+                        {" "}
+                        {parseDays(
+                          calculateDaysOfEmployment(employee.date_of_employment)
+                        )}{" "}
+                      </span>
+                    </div>
+                    <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                      <span> {employee.position} </span>
+                    </div>
+                    <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                      <span> &#8373;{employee.salary} </span>
+                    </div>
+                    <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                      <span> {employee.supervisor.replace(";", ",")} </span>
+                    </div>
+                    <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
+                      <span> {employee.employee_code} </span>
+                    </div>
+                  </div>
+                ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
