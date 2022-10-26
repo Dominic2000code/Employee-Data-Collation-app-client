@@ -88,10 +88,10 @@ const DisplayLogs = () => {
                       <span>{recordsPerTimestamp[timestamp]}</span>
                     </div>
                     <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                      <span> {200} </span>
+                      <span> Upload Successful </span>
                     </div>
                     <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
-                      <span> {`No error`} </span>
+                      <span> No error </span>
                     </div>
                   </div>
                 ))}
