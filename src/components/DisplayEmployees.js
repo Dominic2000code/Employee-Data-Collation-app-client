@@ -53,10 +53,12 @@ const DisplayEmployees = () => {
     // console.log("months = ", months);
     // console.log("weeks = ", week);
     // console.log("days = ", days);
+    const yearAbbreviation = year > 1 ? "yrs" : "yr";
+    const monthAbbreviation = months > 1 ? "mos" : "mo";
 
-    return `${year ? year : ""}${year ? "yr" : ""} ${months ? months : ""}${
-      months ? "mos" : ""
-    } ${days ? days : ""}${days ? "d" : ""}`;
+    return `${year ? year : ""}${year ? yearAbbreviation : ""} ${
+      months ? months : ""
+    }${months ? monthAbbreviation : ""} ${days ? days : ""}${days ? "d" : ""}`;
   }
 
   // const date = employees ? employees[2].date_of_employment : "not yet";
