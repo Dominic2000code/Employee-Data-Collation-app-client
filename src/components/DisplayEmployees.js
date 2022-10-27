@@ -127,7 +127,7 @@ const DisplayEmployees = () => {
           )}{" "}
         </p>
         <p className="mx-5 mt-6 p-4 bg-[#111827] text-white rounded-md shadow-md ">
-          Date format: YYYY/MM/DD
+          Date format: YYYY-MM-DD
         </p>
       </div>
       {isLoading ? (
