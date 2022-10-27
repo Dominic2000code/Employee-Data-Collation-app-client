@@ -28,38 +28,85 @@ const DisplayEmployees = () => {
       });
   }, []);
 
-  const calculateDaysOfEmployment = (startDate) => {
-    let today = new Date().toISOString().slice(0, 10);
-    const diffInMs = new Date(today) - new Date(startDate);
-    const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
-    return diffInDays;
-  };
+  const calcAge = (past, today) => {
+    //convert to UTC
+    // console.log("past", past);
+    const today_UTC = new Date(
+      Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())
+    );
+    const past_UTC = new Date(
+      Date.UTC(past.getUTCFullYear(), past.getUTCMonth(), past.getUTCDate())
+    );
 
-  function parseDays(value) {
-    let year, months, week, days;
+    let days = today_UTC.getDate() - past_UTC.getDate();
+    if (days < 0) {
+      today_UTC.setMonth(today_UTC.getMonth() - 1);
+      days += DaysInMonth(today_UTC);
+    }
 
-    year = value >= 365 ? Math.floor(value / 365) : 0;
-    value = year ? value - year * 365 : value;
+    let months = today_UTC.getMonth() - past_UTC.getMonth();
+    if (months < 0) {
+      today_UTC.setFullYear(today_UTC.getFullYear() - 1);
+      months += 12;
+    }
 
-    months = value >= 30 ? Math.floor((value % 365) / 30) : 0;
-    value = months ? value - months * 30 : value;
+    const years = today_UTC.getFullYear() - past_UTC.getFullYear();
 
-    week = value >= 7 ? Math.floor((value % 365) / 7) : 0;
-    value = week ? value - week * 7 : value;
-
-    days = value < 7 ? Math.floor((value % 365) % 7) : 0;
-
-    // console.log("years = ", year);
-    // console.log("months = ", months);
-    // console.log("weeks = ", week);
-    // console.log("days = ", days);
-    const yearAbbreviation = year > 1 ? "yrs" : "yr";
+    const yearAbbreviation = years > 1 ? "yrs" : "yr";
     const monthAbbreviation = months > 1 ? "mos" : "mo";
 
-    return `${year ? year : ""}${year ? yearAbbreviation : ""} ${
+    return `${years ? years : ""}${years ? yearAbbreviation : ""} ${
       months ? months : ""
     }${months ? monthAbbreviation : ""} ${days ? days : ""}${days ? "d" : ""}`;
-  }
+  };
+
+  const DaysInMonth = (today_UTC) => {
+    const monthStart = new Date(
+      today_UTC.getFullYear(),
+      today_UTC.getMonth(),
+      1
+    );
+    const monthEnd = new Date(
+      today_UTC.getFullYear(),
+      today_UTC.getMonth() + 1,
+      1
+    );
+    const monthLength = (monthEnd - monthStart) / (1000 * 60 * 60 * 24);
+    return monthLength;
+  };
+
+  // const calculateDaysOfEmployment = (startDate) => {
+  //   let today = new Date().toISOString().slice(0, 10);
+  //   const diffInMs = new Date(today) - new Date(startDate);
+  //   const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+  //   return diffInDays;
+  // };
+
+  // function parseDays(value) {
+  //   let year, months, week, days;
+
+  //   year = value >= 365 ? Math.floor(value / 365) : 0;
+  //   value = year ? value - year * 365 : value;
+
+  //   months = value >= 30 ? Math.floor((value % 365) / 30) : 0;
+  //   value = months ? value - months * 30 : value;
+
+  //   week = value >= 7 ? Math.floor((value % 365) / 7) : 0;
+  //   value = week ? value - week * 7 : value;
+
+  //   days = value < 7 ? Math.floor((value % 365) % 7) : 0;
+
+  //   // console.log("years = ", year);
+  //   // console.log("months = ", months);
+  //   // console.log("weeks = ", week);
+  //   // console.log("days = ", days);
+  //   const yearAbbreviation = year > 1 ? "yrs" : "yr";
+  //   const monthAbbreviation = months > 1 ? "mos" : "mo";
+
+  //   return `${year ? year : ""}${year ? yearAbbreviation : ""} ${
+  //     months ? months : ""
+  //   }${months ? monthAbbreviation : ""} ${days ? days : ""}${days ? "d" : ""}`;
+  // }
 
   // const date = employees ? employees[2].date_of_employment : "not yet";
   // const startDate = new Date(date);
@@ -80,7 +127,7 @@ const DisplayEmployees = () => {
           )}{" "}
         </p>
         <p className="mx-5 mt-6 p-4 bg-[#111827] text-white rounded-md shadow-md ">
-          Date format: MM/DD/YYYY
+          Date format: YYYY/MM/DD
         </p>
       </div>
       {isLoading ? (
@@ -147,9 +194,15 @@ const DisplayEmployees = () => {
                     <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
                       <span>
                         {" "}
-                        {parseDays(
-                          calculateDaysOfEmployment(employee.date_of_employment)
-                        )}{" "}
+                        {
+                          // parseDays(
+                          //   calculateDaysOfEmployment(employee.date_of_employment)
+                          // )
+                          calcAge(
+                            new Date(employee.date_of_employment),
+                            new Date()
+                          )
+                        }{" "}
                       </span>
                     </div>
                     <div className="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black">
