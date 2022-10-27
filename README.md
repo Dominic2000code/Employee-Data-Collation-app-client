@@ -17,10 +17,9 @@ Your app is ready to be deployed!
 
 ### `Structure of CSV file for upload`
 
-![alt text](smaple.png "Structure of CSV file")
+![alt text](sample.png "Structure of CSV file")
 
-In the supervisors column to add more that one supervisor a ";" must be used as a separator. A sample excel file is also included to help us. filename: employees.xlsx, it must first be converted in to a .csv file before uploading.
-
+In the supervisors column to add more that one supervisor a ";" must be used as a separator. A sample excel file is also included to help out. Date format is also YYYY/MM/DD. filename: employees.xlsx, it must first be converted in to a .csv file before uploading.
 
 ### `Accessing the application`
 
